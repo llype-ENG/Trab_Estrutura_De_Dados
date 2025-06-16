@@ -2,7 +2,7 @@
 
 Este projeto é uma implementação do clássico **jogo da Torre de Hanoi**, desenvolvida em linguagem C seguindo o padrão **C99**. O objetivo do jogo é mover todos os discos da haste de origem para a haste de destino, obedecendo às regras.
 
-## 🎮 Sobre o jogo
+## Sobre o jogo
 
 A Torre de Hanoi é um quebra-cabeça matemático que consiste em:
 
@@ -13,7 +13,7 @@ A Torre de Hanoi é um quebra-cabeça matemático que consiste em:
 
 O desafio é mover todos os discos da haste de origem para a haste de destino, utilizando a haste auxiliar quando necessário.
 
-## 📦 Funcionalidades
+## Funcionalidades
 
 - Escolha do número de discos.
 - Exibição visual do estado atual das torres.
@@ -21,7 +21,7 @@ O desafio é mover todos os discos da haste de origem para a haste de destino, u
 - Nome do jogador.
 - Interface simples no terminal.
 
-## 🚀 Como compilar
+## Como compilar
 
 Você precisa ter o compilador **GCC** instalado. Para compilar o programa, use o terminal:
 
