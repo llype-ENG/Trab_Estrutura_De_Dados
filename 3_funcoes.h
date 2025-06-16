@@ -13,5 +13,9 @@ void criandoUmaPilha(Pilha* p, int capacidade);
 void limparPilha(Pilha* p);
 int adicionarDiscoNoTopo(Pilha* p, int valor);
 int removerDoTopo(Pilha* p, int* valor);
+int consultarTopoPilha(Pilha* p);
+
+void inicializarTorres(int n);
+void liberarTorres();
 
 #endif
