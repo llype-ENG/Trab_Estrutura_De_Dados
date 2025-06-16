@@ -55,5 +55,50 @@ void gerarDiscoStr(int tamanho, int max_disco, char* buffer) {
     for (; i < espacos; i++) buffer[i] = ' ';
     for (int j = 0; j < largura_disco; j++) buffer[i++] = tamanho == 0 ? '|' : '#';
     for (; i < largura_total; i++) buffer[i] = ' ';
-    buffer[i] = '\0';
+    buffer[i] = '\0'; 
+}
+
+void exibirTorres(int n) {
+    printf("\nEstado atual das torres:\n\n");
+    char linha[3][32];
+
+    for (int i = n - 1; i >= 0; i--) {
+        for (int t = 0; t < 3; t++) {
+            int disco = (i <= torres[t].topo) ? torres[t].discos[i] : 0;
+            gerarDiscoStr(disco, n, linha[t]);
+        }
+        printf("%s   %s   %s\n", linha[0], linha[1], linha[2]);
+    }
+
+    int largura = 2 * n + 1;
+    for (int t = 0; t < 3; t++) {
+        for (int i = 0; i < (largura - 1) / 2; i++) printf(" ");
+        printf("%c", 'A' + t);
+        for (int i = 0; i < (largura - 1) / 2; i++) printf(" ");
+        printf("   ");
+    }
+    printf("\n");
+}
+
+int moverDisco(int origem, int destino) {
+    int disco;
+
+    if (!removerDoTopo(&torres[origem], &disco)) {
+        printf("A torre de origem está vazia!\n");
+        return 0;
+    }
+
+    if (consultarTopoPilha(&torres[destino]) != -1 && consultarTopoPilha(&torres[destino]) < disco) {
+        printf("Movimento inválido! Não pode colocar disco maior sobre menor.\n");
+        adicionarDiscoNoTopo(&torres[origem], disco);
+        return 0;
+    }
+
+    adicionarDiscoNoTopo(&torres[destino], disco);
+    movimentosFeitos++;
+    return 1;
+}
+
+int jogoConcluido(int n) {
+    return torres[2].topo == n - 1;
 }
