@@ -29,3 +29,31 @@ int removerDoTopo(Pilha* p, int* valor) {
     *valor = p->discos[p->topo--];
     return 1;
 }
+
+int consultarTopoPilha(Pilha* p) {
+    return (p->topo >= 0) ? p->discos[p->topo] : -1;
+}
+
+void liberarTorres() {
+    for (int i = 0; i < 3; i++) {
+        limparPilha(&torres[i]);
+    }
+}
+
+void inicializarTorres(int n) {
+    for (int i = 0; i < 3; i++) criandoUmaPilha(&torres[i], n);
+    for (int i = n; i >= 1; i--) adicionarDiscoNoTopo(&torres[0], i);
+    movimentosFeitos = 0;
+}
+
+void gerarDiscoStr(int tamanho, int max_disco, char* buffer) {
+    int largura_total = 2 * max_disco + 1;
+    int largura_disco = 2 * tamanho + 1;
+    int espacos = (largura_total - largura_disco) / 2;
+
+    int i = 0;
+    for (; i < espacos; i++) buffer[i] = ' ';
+    for (int j = 0; j < largura_disco; j++) buffer[i++] = tamanho == 0 ? '|' : '#';
+    for (; i < largura_total; i++) buffer[i] = ' ';
+    buffer[i] = '\0';
+}
