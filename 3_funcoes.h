@@ -18,4 +18,8 @@ int consultarTopoPilha(Pilha* p);
 void inicializarTorres(int n);
 void liberarTorres();
 
+void exibirTorres(int n);
+int moverDisco(int origem, int destino);
+int jogoConcluido(int n);
+
 #endif
