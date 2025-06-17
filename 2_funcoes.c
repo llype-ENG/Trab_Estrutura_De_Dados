@@ -102,3 +102,84 @@ int moverDisco(int origem, int destino) {
 int jogoConcluido(int n) {
     return torres[2].topo == n - 1;
 }
+void salvarHistorico(int discos, int movimentos, const char* nome) {
+    FILE* f = fopen("historico.txt", "a");
+    if (f == NULL) {
+        printf("Erro ao salvar o histórico!\n");
+        return;
+    }
+    fprintf(f, "Jogador: %s | Discos: %d | Movimentos: %d\n", nome, discos, movimentos);
+    fclose(f);
+}
+
+void mostrarHistorico() {
+    FILE* f = fopen("historico.txt", "r");
+    if (f == NULL) {
+        printf("\nNenhum histórico encontrado.\n\n");
+    } else {
+        char linha[200];
+        printf("\n--- Histórico de Jogadores ---\n");
+        while (fgets(linha, sizeof(linha), f)) {
+            printf("%s", linha);
+        }
+        fclose(f);
+    }
+
+    printf("\nPressione ENTER para voltar...");
+    getchar(); getchar();
+}
+
+void iniciarJogo() {
+    int n;
+    char origem, destino;
+    char playerName[100];
+
+    system("cls");
+    printf("Digite seu nome: ");
+    scanf(" %[^\n]", playerName);
+
+    system("cls");
+    printf("Digite o numero de discos (ate %d): ", MAX);
+    scanf("%d", &n);
+    if (n < 1 || n > MAX) {
+        printf("Numero invalido!\n");
+        return;
+    }
+
+    inicializarTorres(n);
+
+    while (!jogoConcluido(n)) {
+        system("cls");  // Limpa a tela (Windows)
+        exibirTorres(n);
+        printf("\nDigite o movimento (ex: A C para mover de A para C): ");
+        scanf(" %c %c", &origem, &destino);
+
+        int o = origem - 'A';
+        int d = destino - 'A';
+
+        if (o < 0 || o > 2 || d < 0 || d > 2) {
+            printf("Torre invalida! Use A, B ou C.\n");
+            printf("Pressione ENTER para continuar...");
+            while (getchar() != '\n');
+            getchar();
+            continue;
+        }
+
+        if (!moverDisco(o, d)) {
+            printf("Movimento invalido. Tente novamente.\n");
+            printf("Pressione ENTER para continuar...");
+            while (getchar() != '\n'); // joga fora tudo até o fim da linha
+            getchar(); // aguarda o ENTER do jogador
+        }
+    }
+
+    system("cls");
+    exibirTorres(n);
+    printf("\nParabens %s! Voce completou a Torre de Hanoi em %d movimentos!\n", playerName, movimentosFeitos);
+    salvarHistorico(n, movimentosFeitos, playerName);
+
+    printf("\nPressione ENTER para voltar ao menu...");
+    getchar(); // Consumir '\n'
+    getchar(); 
+    system("cls");
+}
