@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h> 
 #include <string.h>
 #include "3_funcoes.h"
+
+#define MAXIMO 10
 
 Pilha torres[3]; 
 int movimentosFeitos = 0;
@@ -84,12 +87,12 @@ int moverDisco(int origem, int destino) {
     int disco;
 
     if (!removerDoTopo(&torres[origem], &disco)) {
-        printf("A torre de origem está vazia!\n");
+        printf("A torre de origem esta vazia!\n");
         return 0;
     }
 
     if (consultarTopoPilha(&torres[destino]) != -1 && consultarTopoPilha(&torres[destino]) < disco) {
-        printf("Movimento inválido! Não pode colocar disco maior sobre menor.\n");
+        printf("Movimento invalido! Nao pode colocar disco maior sobre menor.\n");
         adicionarDiscoNoTopo(&torres[origem], disco);
         return 0;
     }
@@ -105,7 +108,7 @@ int jogoConcluido(int n) {
 void salvarHistorico(int discos, int movimentos, const char* nome) {
     FILE* f = fopen("historico.txt", "a");
     if (f == NULL) {
-        printf("Erro ao salvar o histórico!\n");
+        printf("Erro ao salvar o historico!\n");
         return;
     }
     fprintf(f, "Jogador: %s | Discos: %d | Movimentos: %d\n", nome, discos, movimentos);
@@ -118,7 +121,8 @@ void mostrarHistorico() {
         printf("\nNenhum histórico encontrado.\n\n");
     } else {
         char linha[200];
-        printf("\n--- Histórico de Jogadores ---\n");
+        system("cls");
+        printf("\n--- Historico de Jogadores ---\n");
         while (fgets(linha, sizeof(linha), f)) {
             printf("%s", linha);
         }
@@ -127,24 +131,30 @@ void mostrarHistorico() {
 
     printf("\nPressione ENTER para voltar...");
     getchar(); getchar();
+    system("cls");
 }
 
 void iniciarJogo() {
     int n;
     char origem, destino;
     char playerName[100];
-
+    
     system("cls");
     printf("Digite seu nome: ");
     scanf(" %[^\n]", playerName);
-
-    system("cls");
-    printf("Digite o numero de discos (ate %d): ", MAX);
-    scanf("%d", &n);
-    if (n < 1 || n > MAX) {
-        printf("Numero invalido!\n");
-        return;
-    }
+    do {
+        system("cls");
+        printf("Digite o numero de discos (1 ate %d): ", MAXIMO);
+        scanf("%d", &n);
+    
+        if (n < 1 || n > MAXIMO) {
+            printf("Numero invalido! Tente novamente.\n");
+            printf("Pressione ENTER para continuar...");
+            while (getchar() != '\n'); // Limpa o buffer
+            getchar();
+        }
+    
+    } while (n < 1 || n > MAXIMO);
 
     inicializarTorres(n);
 

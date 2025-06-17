@@ -15,10 +15,12 @@ int main() {
 
         switch(escolhaMenu) {
             case 1:
+                iniciarJogo();
                 break;
 
             case 2:
-                break
+                mostrarHistorico();
+                break;
             case 3:
                 return 0;
 
