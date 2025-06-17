@@ -21,5 +21,8 @@ void liberarTorres();
 void exibirTorres(int n);
 int moverDisco(int origem, int destino);
 int jogoConcluido(int n);
+void salvarHistorico(int discos, int movimentos, const char* nome);
+void mostrarHistorico();
+void iniciarJogo();
 
 #endif
